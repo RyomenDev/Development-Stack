@@ -1,0 +1,4 @@
+- [x] UI (frontend)
+- [X] connection with Db (Backend)
+- [ ] connect backend with frontend
+- [ ] Add Authentication and Authorization

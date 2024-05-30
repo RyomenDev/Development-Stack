@@ -1,1 +1,2 @@
-1:42:00
+Pending : StudyNotion
+            todo frontend and backend merge
