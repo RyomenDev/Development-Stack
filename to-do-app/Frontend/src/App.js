@@ -7,6 +7,7 @@ import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import Footer from "./components/Footer";
 import About from "./components/About";
+// require('dotenv').config();
 
 function App() {
   // const name = "Brad";
@@ -52,6 +53,7 @@ function App() {
   }, []);
 
   // fetch tasks
+  
   const fetchTasks = async () => {
     const res = await fetch("http://localhost:5000/tasks");
     const data = await res.json();

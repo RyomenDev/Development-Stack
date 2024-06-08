@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeQuest - A Search Engine Based on DSA Problems</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+    <link rel="shortcut icon" href="/search-code-svgrepo-com.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body>
+
+    <!-- header  -->
+    <div>
+        <!-- <%- include('partials/header') %> -->
+    </div>
+
+    <section class="search-form">
+        <form>
+            <input type="text" name="question" id="question" autocomplete="off" autofocus="on" />
+
+            <button type="submit">
+                <!-- <div class="search">
+            <img src="./search-code-svgrepo-com.svg" width="40px" alt="" />
+          </div> -->
+            </button>
+        </form>
+    </section>
+
+    <section class="loading-div">
+        <div>
+            <img src="./Dual Ball-1s-200px.svg" alt="" />
+        </div>
+    </section>
+
+    <section class="no-results">
+        <h1>Oops! Try searching something else</h1>
+    </section>
+
+    <section class="results">
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+        <div class="question">
+            <div class="title">
+                <a href="#" target="_blank"></a>
+            </div>
+            <div class="body">
+                <p></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer  -->
+    <div>
+        <!-- <%- include('partials/footer') %> -->
+    </div>
+
+    <script>
+        const form = document.querySelector("form");
+        const questionElement = form.question;
+        const resultSection = document.querySelector(".results");
+
+        const loadingSection = document.querySelector(".loading-div");
+        const questionLinks = document.querySelectorAll(".title");
+        const questionText = document.querySelectorAll(".body");
+        const noResultsDiv = document.querySelector(".no-results");
+        // console.log(questionLinks);
+        // console.log(questionText);
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            loadingSection.style.display = "block";
+            resultSection.style.display = "none";
+            noResultsDiv.style.display = "none";
+
+            for (let i = 0; i < questionLinks.length; i++) {
+                questionLinks[i].querySelector("a").innerHTML = "";
+                questionLinks[i].querySelector("a").setAttribute("href", "#");
+                questionText[i].querySelector("p").innerHTML = "";
+            }
+            const query = questionElement.value;
+
+            try {
+                //   console.log("HELLO");
+                const res = await fetch(`/search?query=${query}`, {method: "GET"});
+                const data = await res.json();
+
+                loadingSection.style.display = "none";
+
+                if (data.length === 0) {
+                    noResultsDiv.style.display = "block";
+                } else {
+                    resultSection.style.display = "grid";
+                    for (let i = 0; i < questionLinks.length; i++) {
+                        questionLinks[i].querySelector("a").innerHTML = data[i].title;
+                        questionLinks[i]
+                            .querySelector("a")
+                            .setAttribute("href", `/question/${data[i].id}`);
+                        questionText[i].querySelector("p").innerHTML = data[i].problem;
+                    }
+                }
+
+                console.log(data);
+            } catch (error) {
+                alert(error);
+            }
+        });
+    </script>
+</body>
+
+</html>
