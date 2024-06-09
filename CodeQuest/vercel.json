@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "buildCommand": "echo codeQuest",
+    "installCommand": "npm ci --force && npm install && npm install ejs",
+    "builds": [
+        {
+            "src": "./index.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "views/**/*.ejs",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "/index.js"
+        }
+    ]
+}

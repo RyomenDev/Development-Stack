@@ -6,7 +6,7 @@ let lengthstr;
 
 try {
   // Construct the file path for the length file
-  const filePath = path.join(__dirname, "../files/Length.txt");
+  const filePath = path.join(__dirname, "../files/length.txt");
 
   // Read the content of the length file
   lengthstr = readDocument(filePath);
@@ -16,7 +16,7 @@ try {
 } catch (error) {
   // Handle file not found error
   if (error.code === "ENOENT") {
-    console.error("The file 'Length.txt' does not exist.");
+    console.error("The file 'length.txt' does not exist.");
   } else {
     // Handle any other errors that occur while reading the file
     console.error("Error reading length file:", error);
