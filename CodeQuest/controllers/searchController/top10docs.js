@@ -64,7 +64,7 @@ function top10docs(arr, titles) {
 
   // Returning the response array and the count of non-zero similarity scores
   return { response, nonZero };
-}
+} 
 
 module.exports = {
   top10docs,
