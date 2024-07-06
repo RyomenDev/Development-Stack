@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema(
         ref: "Course",
       },
     ],
-    token: {
+    token: { // to reset password
       type: String,
     },
     resetPasswordExpires: {
