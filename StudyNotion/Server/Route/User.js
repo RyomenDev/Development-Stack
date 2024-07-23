@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   login,
   signup,
-  sendotp,
+  sendOtp,
   changePassword,
 } = require("../Controller/Auth");
 const {
@@ -18,9 +18,9 @@ router.post("/login", login);
 
 router.post("/signup", signup);
 
-router.post("/sendotp", sendotp);
+router.post("/sendOtp", sendOtp);
 
-router.post("/changepassword", auth, changePassword);
+router.post("/changePassword", auth, changePassword);
 
 router.post("/reset-password-token", resetPasswordToken);
 

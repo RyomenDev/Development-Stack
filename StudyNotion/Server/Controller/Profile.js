@@ -10,16 +10,23 @@ const { convertSecondsToDuration } = require("../Util/SecToDuration");
 exports.updateProfile = async (req, res) => {
   try {
     const {
-      firstName = "",
+      firstName = "", // OPTIONAL
       lastName = "",
       dateOfBirth = "",
       about = "",
-      contactNumber = "",
-      gender = "",
+      contactNumber, // REQUIRED
+      gender,
     } = req.body;
     const id = req.user.id;
 
+    if (!contactNumber || !gender || !id) {
+      return res
+        .status(404)
+        .json({ success: false, message: "All Fields are Required" });
+    }
+
     const userDetails = await User.findById(id);
+    // PROFILE ID
     const profile = await Profile.findById(userDetails.additionalDetails);
 
     const user = await User.findByIdAndUpdate(id, {
@@ -56,7 +63,7 @@ exports.updateProfile = async (req, res) => {
 exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id;
-    console.log(id);
+    // console.log(id);
     const user = await User.findById({ _id: id });
     if (!user) {
       return res.status(404).json({
@@ -68,10 +75,11 @@ exports.deleteAccount = async (req, res) => {
     await Profile.findByIdAndDelete({
       _id: new mongoose.Types.ObjectId(user.additionalDetails),
     });
+    // TODO: ENROLLED COUNT | EXPLORE CRONE-JOB
     for (const courseId of user.courses) {
       await Course.findByIdAndUpdate(
         courseId,
-        { $pull: { studentsEnroled: id } },
+        { $pull: { studentsEnrolled: id } },
         { new: true }
       );
     }
@@ -212,7 +220,7 @@ exports.instructorDashboard = async (req, res) => {
     const courseDetails = await Course.find({ instructor: req.user.id });
 
     const courseData = courseDetails.map((course) => {
-      const totalStudentsEnrolled = course.studentsEnroled.length;
+      const totalStudentsEnrolled = course.studentsEnrolled.length;
       const totalAmountGenerated = totalStudentsEnrolled * course.price;
 
       const courseDataWithStats = {

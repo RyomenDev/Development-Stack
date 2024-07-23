@@ -13,8 +13,10 @@ exports.createSection = async (req, res) => {
       });
     }
 
+    // CREATE SECTION
     const newSection = await Section.create({ sectionName });
 
+    // UPDATE COURSE WITH SECTION OBJECT_ID
     const updatedCourse = await Course.findByIdAndUpdate(
       courseId,
       {
@@ -22,9 +24,10 @@ exports.createSection = async (req, res) => {
           courseContent: newSection._id,
         },
       },
-      { new: true }
+      { new: true } // UPDATED DOCUMENT
     )
       .populate({
+        // BOTH SECTION & SUBSECTION
         path: "courseContent",
         populate: {
           path: "subSection",
@@ -49,6 +52,14 @@ exports.createSection = async (req, res) => {
 exports.updateSection = async (req, res) => {
   try {
     const { sectionName, sectionId, courseId } = req.body;
+
+    if (!sectionName || !sectionId || !courseId) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required properties",
+      });
+    }
+    // UPDATE DATA
     const section = await Section.findByIdAndUpdate(
       sectionId,
       { sectionName },

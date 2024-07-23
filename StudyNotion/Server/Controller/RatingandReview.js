@@ -2,6 +2,8 @@ const RatingAndReview = require("../Model/RatingAndReview");
 const Course = require("../Model/Course");
 const mongoose = require("mongoose");
 
+//
+
 exports.createRating = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -9,7 +11,7 @@ exports.createRating = async (req, res) => {
 
     const courseDetails = await Course.findOne({
       _id: courseId,
-      studentsEnroled: { $elemMatch: { $eq: userId } },
+      studentsEnrolled: { $elemMatch: { $eq: userId } },
     });
 
     if (!courseDetails) {
@@ -60,6 +62,8 @@ exports.createRating = async (req, res) => {
   }
 };
 
+//
+
 exports.getAverageRating = async (req, res) => {
   try {
     const courseId = req.body.courseId;
@@ -95,6 +99,8 @@ exports.getAverageRating = async (req, res) => {
     });
   }
 };
+
+//
 
 exports.getAllRatingReview = async (req, res) => {
   try {

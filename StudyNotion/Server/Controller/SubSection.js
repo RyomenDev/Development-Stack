@@ -12,14 +12,16 @@ exports.createSubSection = async (req, res) => {
         .status(404)
         .json({ success: false, message: "All Fields are Required" });
     }
-    console.log(video);
+    // console.log(video);
 
+    // URL -  UPLOAD TO CLOUDINARY
     const uploadDetails = await uploadImageToCloudinary(
       video,
       process.env.FOLDER_NAME
     );
-    console.log(uploadDetails);
+    // console.log(uploadDetails);
 
+    // CREATE SUBSECTION
     const SubSectionDetails = await SubSection.create({
       title: title,
       timeDuration: `${uploadDetails.duration}`,
@@ -27,6 +29,7 @@ exports.createSubSection = async (req, res) => {
       videoUrl: uploadDetails.secure_url,
     });
 
+    // UPDATE SECTION 
     const updatedSection = await Section.findByIdAndUpdate(
       { _id: sectionId },
       { $push: { subSection: SubSectionDetails._id } },

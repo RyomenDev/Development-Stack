@@ -9,8 +9,6 @@ const { convertSecondsToDuration } = require("../Util/SecToDuration");
 
 exports.createCourse = async (req, res) => {
   try {
-    const userId = req.user.id;
-
     let {
       courseName,
       courseDescription,
@@ -27,6 +25,7 @@ exports.createCourse = async (req, res) => {
     const tag = JSON.parse(_tag);
     const instructions = JSON.parse(_instructions);
 
+    // VALIDATION
     if (
       !courseName ||
       !courseDescription ||
@@ -46,6 +45,8 @@ exports.createCourse = async (req, res) => {
       status = "Draft";
     }
 
+    // INSTRUCTOR OBJECT ID
+    const userId = req.user.id;
     const instructorDetails = await User.findById(userId, {
       accountType: "Instructor",
     });
@@ -56,6 +57,7 @@ exports.createCourse = async (req, res) => {
       });
     }
 
+    // CATEGORY VALIDATION
     const categoryDetails = await Category.findById(category);
     if (!categoryDetails) {
       return res.status(404).json({
@@ -64,11 +66,13 @@ exports.createCourse = async (req, res) => {
       });
     }
 
+    // UPLOAD IMAGE TO CLOUDINARY
     const thumbnailImage = await uploadImageToCloudinary(
       thumbnail,
       process.env.FOLDER_NAME
     );
 
+    // CREATE AN ENTRY FOR NEW COURSE
     const newCourse = await Course.create({
       courseName,
       courseDescription,
@@ -82,6 +86,7 @@ exports.createCourse = async (req, res) => {
       instructions,
     });
 
+    // USER (instructor) UPDATE | ADD NEW COURSE TO USER SCHEMA OF INSTRUCTOR
     await User.findByIdAndUpdate(
       { _id: instructorDetails._id },
       {
@@ -92,6 +97,7 @@ exports.createCourse = async (req, res) => {
       { new: true }
     );
 
+    // UPDATE CATEGORY SCHEMA
     await Category.findByIdAndUpdate(
       { _id: category },
       {
@@ -116,6 +122,8 @@ exports.createCourse = async (req, res) => {
     });
   }
 };
+
+//
 
 exports.editCourse = async (req, res) => {
   try {
@@ -183,6 +191,8 @@ exports.editCourse = async (req, res) => {
   }
 };
 
+//
+
 exports.getAllCourses = async (req, res) => {
   try {
     const allCourses = await Course.find(
@@ -213,9 +223,11 @@ exports.getAllCourses = async (req, res) => {
   }
 };
 
+//
+
 exports.getCourseDetails = async (req, res) => {
   try {
-    const { courseId } = req.body;
+    const { courseId } = req.body; // GET ID
     const courseDetails = await Course.findOne({
       _id: courseId,
     })
@@ -267,6 +279,9 @@ exports.getCourseDetails = async (req, res) => {
     });
   }
 };
+
+//
+
 exports.getFullCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -332,6 +347,8 @@ exports.getFullCourseDetails = async (req, res) => {
   }
 };
 
+//
+
 exports.getInstructorCourses = async (req, res) => {
   try {
     const instructorId = req.user.id;
@@ -362,6 +379,8 @@ exports.getInstructorCourses = async (req, res) => {
   }
 };
 
+//
+
 exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
@@ -371,7 +390,7 @@ exports.deleteCourse = async (req, res) => {
       return res.status(404).json({ message: "Course not found" });
     }
 
-    const studentsEnrolled = course.studentsEnroled;
+    const studentsEnrolled = course.studentsEnrolled;
     for (const studentId of studentsEnrolled) {
       await User.findByIdAndUpdate(studentId, {
         $pull: { courses: courseId },

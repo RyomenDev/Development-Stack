@@ -172,7 +172,7 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.sendotp = async (req, res) => {
+exports.sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
 
