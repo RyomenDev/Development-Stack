@@ -4,6 +4,8 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+//
+
 exports.createCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
@@ -32,6 +34,8 @@ exports.createCategory = async (req, res) => {
   }
 };
 
+//
+
 exports.showAllCategories = async (req, res) => {
   try {
     const allCategory = await Category.find(
@@ -51,10 +55,13 @@ exports.showAllCategories = async (req, res) => {
   }
 };
 
+//
+
 exports.categoryPageDetails = async (req, res) => {
   try {
     const { categoryId } = req.body;
 
+    // course by specified categoryId
     const selectedCategory = await Category.findById(categoryId)
       .populate({
         path: "courses",
@@ -83,6 +90,8 @@ exports.categoryPageDetails = async (req, res) => {
     const categoriesExceptSelected = await Category.find({
       _id: { $ne: categoryId },
     });
+
+    // get courses for differentCategory 
     let differentCategory = await Category.findOne(
       categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
         ._id
@@ -105,6 +114,7 @@ exports.categoryPageDetails = async (req, res) => {
       .sort((a, b) => b.sold - a.sold)
       .slice(0, 10);
 
+    // return 
     res.status(200).json({
       success: true,
       data: {

@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, matchPath, useLocation, useNavigate } from "react-router-dom"
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from "../../Asset/Logo/Logo-Full-Light.png"
-import { NavbarLinks } from "../../Data/Navbar-Link"
+
+import { NavbarLinks } from "../../data/Navbar-Link.js"
 import { apiConnector } from "../../Service/apiConnector"
 import { categories } from "../../Service/apis"
 import { ACCOUNT_TYPE } from "../../Util/constants"

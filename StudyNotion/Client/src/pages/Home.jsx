@@ -17,7 +17,7 @@ import TimelineSection from "../Component/Core/HomePage/Timeline"
 
 function Home() {
   return (
-    <div>
+    <div>   
       {/* Section 1 */}
       <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
         {/* Become a Instructor Button */}

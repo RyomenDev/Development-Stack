@@ -5,53 +5,53 @@ import { Route, Routes, useNavigate } from "react-router-dom"
 
 
 import Navbar from "./Component/Common/Navbar"
-import OpenRoute from "./Component/Core/Auth/OpenRoute"
-import PrivateRoute from "./Component/Core/Auth/PrivateRoute"
-import AddCourse from "./Component/Core/Dashboard/AddCourse"
-import Cart from "./Component/Core/Dashboard/Cart"
-import EditCourse from "./Component/Core/Dashboard/EditCourse"
-import EnrolledCourses from "./Component/Core/Dashboard/EnrolledCourses"
-import Instructor from "./Component/Core/Dashboard/Instructor"
-import MyCourses from "./Component/Core/Dashboard/MyCourses"
-import MyProfile from "./Component/Core/Dashboard/MyProfile"
-import Settings from "./Component/Core/Dashboard/Settings"
-import VideoDetails from "./Component/Core/ViewCourse/VideoDetails"
-import About from "./Pages/About"
-import Catalog from "./Pages/Catalog"
-import Contact from "./Pages/Contact"
-import CourseDetails from "./Pages/CourseDetails"
-import Dashboard from "./Pages/Dashboard"
-import Error from "./Pages/Error"
-import ForgotPassword from "./Pages/ForgotPassword"
+// import OpenRoute from "./Component/Core/Auth/OpenRoute"
+// import PrivateRoute from "./Component/Core/Auth/PrivateRoute"
+// import AddCourse from "./Component/Core/Dashboard/AddCourse"
+// import Cart from "./Component/Core/Dashboard/Cart"
+// import EditCourse from "./Component/Core/Dashboard/EditCourse"
+// import EnrolledCourses from "./Component/Core/Dashboard/EnrolledCourses"
+// import Instructor from "./Component/Core/Dashboard/Instructor"
+// import MyCourses from "./Component/Core/Dashboard/MyCourses"
+// import MyProfile from "./Component/Core/Dashboard/MyProfile"
+// import Settings from "./Component/Core/Dashboard/Settings"
+// import VideoDetails from "./Component/Core/ViewCourse/VideoDetails"
+// import About from "./Pages/About"
+// import Catalog from "./Pages/Catalog"
+// import Contact from "./Pages/Contact"
+// import CourseDetails from "./Pages/CourseDetails"
+// import Dashboard from "./Pages/Dashboard"
+// import Error from "./Pages/Error"
+// import ForgotPassword from "./Pages/ForgotPassword"
 
-import Home from "./Pages/Home"
-import Login from "./Pages/Login"
-import Signup from "./Pages/Signup"
-import UpdatePassword from "./Pages/UpdatePassword"
-import VerifyEmail from "./Pages/VerifyEmail"
-import ViewCourse from "./Pages/ViewCourse"
-import { getUserDetails } from "./Service/Operation/profileAPI"
-import { ACCOUNT_TYPE } from "./Util/constants"
+import Home from "./pages/Home"
+// import Login from "./Pages/Login"
+// import Signup from "./Pages/Signup"
+// import UpdatePassword from "./Pages/UpdatePassword"
+// import VerifyEmail from "./Pages/VerifyEmail"
+// import ViewCourse from "./Pages/ViewCourse"
+// import { getUserDetails } from "./Service/Operation/profileAPI"
+// import { ACCOUNT_TYPE } from "./Util/constants"
 
 function App() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { user } = useSelector((state) => state.profile)
+//   const dispatch = useDispatch()
+//   const navigate = useNavigate()
+//   const { user } = useSelector((state) => state.profile)
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      const token = JSON.parse(localStorage.getItem("token"))
-      dispatch(getUserDetails(token, navigate))
-    }
+//   useEffect(() => {
+//     if (localStorage.getItem("token")) {
+//       const token = JSON.parse(localStorage.getItem("token"))
+//       dispatch(getUserDetails(token, navigate))
+//     }
 
-  }, [])
+//   }, [])
 
   return (
     <div className="flex min-h-screen w-screen flex-col bg-richblack-900 font-inter">
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        {/* <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
@@ -145,7 +145,7 @@ function App() {
           )}
         </Route>
 
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<Error />} /> */}
       </Routes>
     </div>
   )

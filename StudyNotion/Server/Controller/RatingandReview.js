@@ -76,7 +76,7 @@ exports.getAverageRating = async (req, res) => {
       },
       {
         $group: {
-          _id: null,
+          _id: null, // group on which basis
           averageRating: { $avg: "$rating" },
         },
       },
@@ -85,10 +85,10 @@ exports.getAverageRating = async (req, res) => {
     if (result.length > 0) {
       return res.status(200).json({
         success: true,
-        averageRating: result[0].averageRating,
+        averageRating: result[0].averageRating, // avg at index 0
       });
     }
-
+    // if rating not exist
     return res.status(200).json({ success: true, averageRating: 0 });
   } catch (error) {
     console.error(error);
@@ -108,7 +108,7 @@ exports.getAllRatingReview = async (req, res) => {
       .sort({ rating: "desc" })
       .populate({
         path: "user",
-        select: "firstName lastName email image",
+        select: "firstName lastName email image", //fields want
       })
       .populate({
         path: "course",

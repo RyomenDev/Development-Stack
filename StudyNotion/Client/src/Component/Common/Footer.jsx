@@ -1,5 +1,5 @@
 import React from "react";
-import { FooterLink2 } from "../../Data/Footer-Link"
+import { FooterLink2 } from "../../data/Footer-Link.js"
 import { Link } from "react-router-dom";
 
 // Images
